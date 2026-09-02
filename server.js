@@ -6,13 +6,14 @@ const PORT = 3000;
 
 const ROOT = __dirname;
 
-// پوشه ذخیره تعهدنامه‌ها
+// پوشه اصلی ذخیره تعهدنامه‌ها
 const RECORDS_DIR = path.join(
     ROOT,
+    "..",
     "Agreement Records on Servers"
 );
 
-// ساخت خودکار پوشه در صورت نبودن
+// ساخت پوشه در صورت نبودن
 if (!fs.existsSync(RECORDS_DIR)) {
     fs.mkdirSync(RECORDS_DIR, {
         recursive: true
@@ -90,8 +91,7 @@ const server = http.createServer((req, res) => {
                 res.end(
                     JSON.stringify({
                         ok: false,
-                        error:
-                            "Invalid record"
+                        error: "Invalid record"
                     })
                 );
             }
@@ -110,7 +110,6 @@ const server = http.createServer((req, res) => {
             ? "index.html"
             : req.url.substring(1);
 
-    // جلوگیری از دسترسی به مسیرهای خارج
     requestedPath =
         path.normalize(requestedPath);
 
@@ -118,7 +117,6 @@ const server = http.createServer((req, res) => {
         requestedPath.startsWith("..") ||
         path.isAbsolute(requestedPath)
     ) {
-
         res.writeHead(403);
         res.end("Forbidden");
         return;
@@ -135,7 +133,6 @@ const server = http.createServer((req, res) => {
         (error, data) => {
 
             if (error) {
-
                 res.writeHead(404);
                 res.end("Not Found");
                 return;
@@ -144,44 +141,29 @@ const server = http.createServer((req, res) => {
             let contentType =
                 "text/html; charset=utf-8";
 
-            if (
-                filePath.endsWith(".png")
-            ) {
-                contentType =
-                    "image/png";
+            if (filePath.endsWith(".png")) {
+                contentType = "image/png";
             }
 
             if (
                 filePath.endsWith(".jpg") ||
                 filePath.endsWith(".jpeg")
             ) {
-                contentType =
-                    "image/jpeg";
+                contentType = "image/jpeg";
             }
 
-            if (
-                filePath.endsWith(".css")
-            ) {
+            if (filePath.endsWith(".css")) {
                 contentType =
                     "text/css; charset=utf-8";
             }
 
-            if (
-                filePath.endsWith(".js")
-            ) {
-                contentType =
-                    "application/javascript; charset=utf-8";
-            }
-
             res.writeHead(200, {
-                "Content-Type":
-                    contentType
+                "Content-Type": contentType
             });
 
             res.end(data);
         }
     );
-
 });
 
 
@@ -195,15 +177,9 @@ server.listen(
     () => {
 
         console.log("");
-        console.log(
-            "=============================="
-        );
-        console.log(
-            "       BICE AGREEMENT"
-        );
-        console.log(
-            "=============================="
-        );
+        console.log("==============================");
+        console.log("       BICE AGREEMENT");
+        console.log("==============================");
         console.log("");
 
         console.log(
@@ -211,8 +187,7 @@ server.listen(
         );
 
         console.log(
-            "http://127.0.0.1:" +
-            PORT
+            "http://127.0.0.1:" + PORT
         );
 
         console.log("");
