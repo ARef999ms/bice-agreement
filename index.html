@@ -7,14 +7,9 @@
 <title>Bice Agreement</title>
 
 <style>
+*{box-sizing:border-box}
 
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -53,28 +48,22 @@ body{
   display:block;
   opacity:0;
   transform:translateY(-60px) scale(.92);
-
-  animation:
-    logoEnter 1.25s cubic-bezier(.16,1,.3,1) .1s forwards;
+  animation:logoEnter 1.25s cubic-bezier(.16,1,.3,1) .1s forwards;
 }
 
 @keyframes logoEnter{
-
   0%{
     opacity:0;
     transform:translateY(-60px) scale(.92);
   }
-
   65%{
     opacity:1;
     transform:translateY(7px) scale(1.015);
   }
-
   100%{
     opacity:1;
     transform:translateY(0) scale(1);
   }
-
 }
 
 h1{
@@ -226,7 +215,6 @@ input:focus{
 }
 
 @media(max-width:600px){
-
   body{
     padding:15px 10px 10px;
   }
@@ -253,11 +241,9 @@ input:focus{
   .signature-box{
     height:180px;
   }
-
 }
 
 @media print{
-
   body{
     background:#fff;
     color:#000;
@@ -287,9 +273,7 @@ input:focus{
   .footer-rights{
     color:#555;
   }
-
 }
-
 </style>
 </head>
 
@@ -424,10 +408,6 @@ input:focus{
 
 <script>
 
-/* =========================================
-   SIGNATURE PAD
-========================================= */
-
 const canvas =
   document.getElementById("signatureCanvas");
 
@@ -441,7 +421,9 @@ let drawing = false;
 let hasSignature = false;
 
 
-/* Canvas Resolution */
+/* =========================================
+   SIGNATURE PAD
+========================================= */
 
 function resizeCanvas(){
 
@@ -477,8 +459,6 @@ window.addEventListener(
 );
 
 
-/* Pointer Position */
-
 function getPosition(event){
 
   const rect =
@@ -490,8 +470,6 @@ function getPosition(event){
   };
 }
 
-
-/* Start Drawing */
 
 canvas.addEventListener(
   "pointerdown",
@@ -519,8 +497,6 @@ canvas.addEventListener(
 );
 
 
-/* Drawing */
-
 canvas.addEventListener(
   "pointermove",
   function(event){
@@ -540,8 +516,6 @@ canvas.addEventListener(
 );
 
 
-/* Stop Drawing */
-
 canvas.addEventListener(
   "pointerup",
   stopDrawing
@@ -553,12 +527,9 @@ canvas.addEventListener(
 );
 
 function stopDrawing(){
-
   drawing = false;
 }
 
-
-/* Clear Signature */
 
 function clearSignature(){
 
@@ -609,8 +580,6 @@ async function acceptAgreement(){
       .checked;
 
 
-  /* Validation */
-
   if(
     !owner ||
     !discord ||
@@ -626,19 +595,13 @@ async function acceptAgreement(){
   }
 
 
-  /* Loading */
-
   status.innerHTML =
     "در حال ثبت تعهدنامه...";
 
 
-  /* Signature */
-
   const signatureImage =
     canvas.toDataURL("image/png");
 
-
-  /* Unique Record ID */
 
   const recordId =
     "BICE-" +
@@ -650,13 +613,9 @@ async function acceptAgreement(){
       .toUpperCase();
 
 
-  /* Timestamp */
-
   const acceptedAt =
     new Date().toISOString();
 
-
-  /* Agreement Record */
 
   const record = {
 
@@ -682,7 +641,7 @@ async function acceptAgreement(){
 
 
   /* =========================================
-     SEND TO CLOUDFLARE API
+     SAVE TO CLOUDFLARE D1
   ========================================= */
 
   try{
@@ -716,7 +675,7 @@ async function acceptAgreement(){
 
 
     /* =========================================
-       LOCAL BACKUP
+       LOCAL BROWSER BACKUP
     ========================================= */
 
     localStorage.setItem(
@@ -726,7 +685,36 @@ async function acceptAgreement(){
 
 
     /* =========================================
-       CREATE JSON BACKUP FILE
+       SAVE TO LOCAL SERVER FOLDER
+    ========================================= */
+
+    try{
+
+      await fetch(
+        "http://127.0.0.1:3000/save-record",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":"application/json"
+          },
+
+          body:JSON.stringify(record)
+        }
+      );
+
+    }catch(localError){
+
+      console.warn(
+        "Local server is not running.",
+        localError
+      );
+
+    }
+
+
+    /* =========================================
+       DOWNLOAD JSON BACKUP
     ========================================= */
 
     const json =
@@ -744,10 +732,8 @@ async function acceptAgreement(){
         }
       );
 
-
     const url =
       URL.createObjectURL(blob);
-
 
     const download =
       document.createElement("a");
