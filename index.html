@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<biceAgreement>
+
+    <header>
+        <title>Bice — تعهدنامه فعالیت و حفظ هویت</title>
+        <subtitle>حفظ هویت بصری و محتوای اختصاصی بایس</subtitle>
+    </header>
+
+    <agreement>
+
+        <section>
+            <text>
+                این تعهدنامه درباره مجموعه بایس و فعالیت آن در سرور است.
+                بایس دارای سابقه ۲ سال و ۶ ماه فعالیت در این حوزه
+                و رول فعالیت اختصاصی خود است.
+            </text>
+        </section>
+
+        <section>
+            <text>
+                در صورت پایان فعالیت بایس در سرور، مپ، موتور، محل و سایر
+                محتوای اختصاصی که مشخصاً برای بایس ایجاد یا اختصاص داده شده،
+                نباید بدون توافق جدید به گنگ دیگری واگذار یا برای ساخت
+                جایگزین مستقیم بایس استفاده شود.
+            </text>
+        </section>
+
+        <section>
+            <text>
+                این تعهد به معنی انحصاری بودن موتورسواری، گنگ موتوری،
+                لباس، سبک یا ایده‌های عمومی نیست و وجود گروه‌های موتورسوار
+                دیگر بلامانع است؛ محدودیت فقط مربوط به بازسازی یا جایگزینی
+                مستقیم هویت و محتوای اختصاصی بایس است.
+            </text>
+        </section>
+
+    </agreement>
+
+    <form>
+
+        <field id="owner" type="text">
+            <label>نام و نام خانوادگی Owner</label>
+            <placeholder>نام را وارد کنید</placeholder>
+        </field>
+
+        <field id="discord" type="text">
+            <label>Discord ID / Username</label>
+            <placeholder>Discord</placeholder>
+        </field>
+
+        <field id="server" type="text">
+            <label>نام سرور</label>
+            <placeholder>Server</placeholder>
+        </field>
+
+        <field id="signature" type="text">
+            <label>امضای دیجیتال (نام خود را وارد کنید)</label>
+            <placeholder>نام به عنوان امضا</placeholder>
+        </field>
+
+        <accept>
+            <checkbox required="true"/>
+            <text>متن را خواندم و مفاد آن را می‌پذیرم.</text>
+        </accept>
+
+        <button action="accept">
+            Accept &amp; Generate Record
+        </button>
+
+    </form>
+
+    <record>
+        <accepted>true</accepted>
+        <owner/>
+        <discord/>
+        <server/>
+        <signature/>
+        <acceptedAt/>
+    </record>
+
+</biceAgreement>
